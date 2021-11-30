@@ -1,4 +1,4 @@
-package com.example.demo
+package br.furb.progweb.soap
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean
 import org.springframework.context.ApplicationContext
@@ -12,7 +12,6 @@ import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition
 import org.springframework.xml.xsd.SimpleXsdSchema
 import org.springframework.xml.xsd.XsdSchema
 
-
 @EnableWs
 @Configuration
 class WebServiceConfig : WsConfigurerAdapter() {
@@ -24,18 +23,18 @@ class WebServiceConfig : WsConfigurerAdapter() {
         return ServletRegistrationBean(servlet, "/ws/*")
     }
 
-    @Bean(name = ["countries"])
+    @Bean(name = ["domain"])
     fun defaultWsdl11Definition(countriesSchema: XsdSchema?): DefaultWsdl11Definition {
         val wsdl11Definition = DefaultWsdl11Definition()
-        wsdl11Definition.setPortTypeName("CountriesPort")
+        wsdl11Definition.setPortTypeName("ServicePort")
         wsdl11Definition.setLocationUri("/ws")
-        wsdl11Definition.setTargetNamespace("http://example.com/demo")
+        wsdl11Definition.setTargetNamespace("http://furb.br/progweb/soap")
         wsdl11Definition.setSchema(countriesSchema)
         return wsdl11Definition
     }
 
     @Bean
-    fun countriesSchema(): XsdSchema {
-        return SimpleXsdSchema(ClassPathResource("countries.xsd"))
+    fun domainSchema(): XsdSchema {
+        return SimpleXsdSchema(ClassPathResource("domain.xsd"))
     }
 }
