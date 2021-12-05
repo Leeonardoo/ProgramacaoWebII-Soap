@@ -4,9 +4,10 @@ import br.furb.progweb.soap.Car
 import br.furb.progweb.soap.CreateCarRequest
 import br.furb.progweb.soap.UpdateCarRequest
 import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 import javax.annotation.PostConstruct
 
-@Component
+@Repository
 class CarRepository {
 
     private val cars: MutableMap<Int, Car> = hashMapOf()

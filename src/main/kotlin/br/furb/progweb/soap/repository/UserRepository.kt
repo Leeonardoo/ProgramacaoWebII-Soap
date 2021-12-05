@@ -2,9 +2,10 @@ package br.furb.progweb.soap.repository
 
 import br.furb.progweb.soap.*
 import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 import javax.annotation.PostConstruct
 
-@Component
+@Repository
 class UserRepository {
 
     private val users: MutableMap<Int, User> = hashMapOf()
