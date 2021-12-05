@@ -13,17 +13,33 @@ class CarEndpoint @Autowired constructor(private val carRepository: CarRepositor
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCarRequest")
     @ResponsePayload
-    fun getCar(@RequestPayload request: GetCarRequest): GetCarResponse {
-        return GetCarResponse().apply {
-            car = carRepository.findCar(request.serialNumber)
+    fun getCar(@RequestPayload request: GetCarRequest): CarResponse {
+        return CarResponse().apply {
+            car = carRepository.find(request.serialNumber)
         }
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createCarRequest")
     @ResponsePayload
-    fun createCar(@RequestPayload request: CreateCarRequest): GetCarResponse {
-        return GetCarResponse().apply {
-            car = carRepository.addCar(request)
+    fun createCar(@RequestPayload request: CreateCarRequest): CarResponse {
+        return CarResponse().apply {
+            car = carRepository.create(request)
+        }
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteCarRequest")
+    @ResponsePayload
+    fun deleteCar(@RequestPayload request: DeleteCarRequest): CarResponse {
+        return CarResponse().apply {
+            car = carRepository.delete(request.serialNumber)
+        }
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateCarRequest")
+    @ResponsePayload
+    fun updateCar(@RequestPayload request: UpdateCarRequest): CarResponse {
+        return CarResponse().apply {
+            car = carRepository.update(request)
         }
     }
 }

@@ -2,6 +2,7 @@ package br.furb.progweb.soap.repository
 
 import br.furb.progweb.soap.Car
 import br.furb.progweb.soap.CreateCarRequest
+import br.furb.progweb.soap.UpdateCarRequest
 import br.furb.progweb.soap.User
 import org.springframework.stereotype.Component
 import javax.annotation.PostConstruct
@@ -27,14 +28,43 @@ class CarRepository {
         cars[car.serialNumber] = car
     }
 
-    fun addCar(request: CreateCarRequest): Car? {
+    fun create(request: CreateCarRequest): Car? {
+        if (cars[request.car.serialNumber] != null) {
+            throw IllegalArgumentException("Já existe um carro com o serialNumber informado")
+        }
+
         validate(request.car)
 
         cars[request.car.serialNumber] = request.car
         return cars[request.car.serialNumber]
     }
 
-    fun findCar(serialNumber: Int): Car? = cars[serialNumber]
+    fun find(serialNumber: Int): Car? {
+        if (cars[serialNumber] == null) {
+            throw IllegalArgumentException("Nenhum carro encontrado com o serialNumber informado")
+        }
+
+        return cars[serialNumber]
+    }
+
+    fun delete(serialNumber: Int): Car? {
+        if (cars[serialNumber] == null) {
+            throw IllegalArgumentException("Nenhum carro encontrado com o serialNumber informado")
+        }
+
+        return cars.remove(serialNumber)
+    }
+
+    fun update(request: UpdateCarRequest): Car? {
+        if (cars[request.car.serialNumber] == null) {
+            throw IllegalArgumentException("Nenhum carro encontrado com o serialNumber informado")
+        }
+
+        validate(request.car)
+
+        cars[request.car.serialNumber] = request.car
+        return cars[request.car.serialNumber]
+    }
 
     private fun validate(car: Car?) {
         car ?: throw IllegalArgumentException("O campo car não pode estar vazio")

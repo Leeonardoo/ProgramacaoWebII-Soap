@@ -6,8 +6,8 @@ import org.springframework.boot.runApplication
 const val NAMESPACE_URI = "http://furb.br/progweb/soap"
 
 @SpringBootApplication
-class Demo1Application
+class SoapApplication
 
 fun main(args: Array<String>) {
-    runApplication<Demo1Application>(*args)
+    runApplication<SoapApplication>(*args)
 }
