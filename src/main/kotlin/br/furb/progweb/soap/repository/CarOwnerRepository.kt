@@ -1,6 +1,7 @@
 package br.furb.progweb.soap.repository
 
 import br.furb.progweb.soap.Car
+import br.furb.progweb.soap.domain.CarOwner
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
@@ -11,6 +12,6 @@ class CarOwnerRepository @Autowired constructor(
 ) {
 
     //userId -> Car
-    private val carOwners = mutableMapOf<Int, Car>()
+    private val carOwners = mutableSetOf<CarOwner>()
 
 }
