@@ -3,7 +3,6 @@ package br.furb.progweb.soap.repository
 import br.furb.progweb.soap.Car
 import br.furb.progweb.soap.CreateCarRequest
 import br.furb.progweb.soap.UpdateCarRequest
-import br.furb.progweb.soap.User
 import org.springframework.stereotype.Component
 import javax.annotation.PostConstruct
 
@@ -25,7 +24,19 @@ class CarRepository {
             year = 2029
             plate = "ASD1234"
         }
+        val car2 = Car().apply {
+            serialNumber = 2
+            make = "Teste"
+            model = "Teste"
+            type = "SUV"
+            power = 999999
+            seats = 10
+            weight = 9992.2f
+            year = 2029
+            plate = "ASD1234"
+        }
         cars[car.serialNumber] = car
+        cars[car2.serialNumber] = car2
     }
 
     fun create(request: CreateCarRequest): Car? {
