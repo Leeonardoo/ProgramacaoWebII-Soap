@@ -18,7 +18,7 @@ class UserEndpoint @Autowired constructor(private val userRepository: UserReposi
     @ResponsePayload
     fun getUser(@RequestPayload request: GetUserRequest): UserResponse {
         return UserResponse().apply {
-            user = userRepository.findUser(request.id)
+            user = userRepository.find(request.id)
         }
     }
 
@@ -26,7 +26,23 @@ class UserEndpoint @Autowired constructor(private val userRepository: UserReposi
     @ResponsePayload
     fun createUser(@RequestPayload request: CreateUserRequest): UserResponse {
         return UserResponse().apply {
-            user = userRepository.addUser(request)
+            user = userRepository.create(request)
+        }
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteUserRequest")
+    @ResponsePayload
+    fun deleteUser(@RequestPayload request: DeleteUserRequest): UserResponse {
+        return UserResponse().apply {
+            user = userRepository.delete(request.id)
+        }
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateUserRequest")
+    @ResponsePayload
+    fun updateUser(@RequestPayload request: UpdateUserRequest): UserResponse {
+        return UserResponse().apply {
+            user = userRepository.update(request)
         }
     }
 }

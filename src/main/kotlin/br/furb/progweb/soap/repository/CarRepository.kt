@@ -52,7 +52,7 @@ class CarRepository {
 
     fun find(serialNumber: Int): Car? {
         if (cars[serialNumber] == null) {
-            throw IllegalArgumentException("Nenhum carro encontrado com o serialNumber informado")
+            throw NoSuchElementException("Nenhum carro encontrado com o serialNumber informado")
         }
 
         return cars[serialNumber]
@@ -60,7 +60,7 @@ class CarRepository {
 
     fun delete(serialNumber: Int): Car? {
         if (cars[serialNumber] == null) {
-            throw IllegalArgumentException("Nenhum carro encontrado com o serialNumber informado")
+            throw NoSuchElementException("Nenhum carro encontrado com o serialNumber informado")
         }
 
         return cars.remove(serialNumber)
@@ -68,7 +68,7 @@ class CarRepository {
 
     fun update(request: UpdateCarRequest): Car? {
         if (cars[request.car.serialNumber] == null) {
-            throw IllegalArgumentException("Nenhum carro encontrado com o serialNumber informado")
+            throw NoSuchElementException("Nenhum carro encontrado com o serialNumber informado")
         }
 
         validate(request.car)
