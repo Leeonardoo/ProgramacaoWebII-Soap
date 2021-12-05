@@ -59,6 +59,9 @@ class CarRepository {
         return cars[serialNumber]
     }
 
+    fun findAll(serialNumbers: List<Int>): List<Car> =
+        cars.filter { serialNumbers.contains(it.key) }.values.toList()
+
     fun delete(serialNumber: Int): Car? {
         if (cars[serialNumber] == null) {
             throw NoSuchElementException("Nenhum carro encontrado com o serialNumber informado")

@@ -11,7 +11,21 @@ class CarOwnerRepository @Autowired constructor(
     private val userRepository: UserRepository
 ) {
 
-    //userId -> Car
+    //userId -> carId
     private val carOwners = mutableSetOf<CarOwner>()
 
+    fun getCarsByOwner(ownerId: Int): List<Car> {
+        val carIds = carOwners.filter { it.userId == ownerId }.map { it.carId }
+
+        if (carIds.isEmpty()) {
+            throw NoSuchElementException("Nenhum carro encontrado com o usuário informado")
+        }
+
+        return carRepository.findAll(carIds)
+    }
+
+    //Lista de donos por carro
+    //Adicionar/remover carro ao usuário
+    //Adicionar/remover usuário ao carro
+    //Remover ambos
 }
