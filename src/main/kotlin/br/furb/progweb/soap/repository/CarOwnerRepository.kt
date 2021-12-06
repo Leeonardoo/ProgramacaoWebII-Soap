@@ -24,6 +24,8 @@ class CarOwnerRepository @Autowired constructor(
         return carRepository.findAll(carIds)
     }
 
+    //fun getCarOwners(carId: Int): List<User>
+
     //Lista de donos por carro
     //Adicionar/remover carro ao usuário
     //Adicionar/remover usuário ao carro
