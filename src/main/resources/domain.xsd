@@ -59,6 +59,49 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:element name="getCarsByOwnerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getCarOwnersRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="carSerialNumber" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addOwnerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:int"/>
+                <xs:element name="carSerialNumber" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="removeCarOwnerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:int"/>
+                <xs:element name="carSerialNumber" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="carsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cars" type="tns:car" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="users" type="tns:user" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- Users -->
     <xs:element name="createOwnerRequest">
         <xs:complexType>
