@@ -116,4 +116,7 @@ class UserRepository {
 
         validate(user)
     }
+
+    fun findAll(id: List<Int>): List<User> =
+        users.filter { id.contains(it.key) }.values.toList()
 }

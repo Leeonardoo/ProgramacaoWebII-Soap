@@ -1,6 +1,7 @@
 package br.furb.progweb.soap.repository
 
 import br.furb.progweb.soap.Car
+import br.furb.progweb.soap.User
 import br.furb.progweb.soap.domain.CarOwner
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
@@ -14,6 +15,7 @@ class CarOwnerRepository @Autowired constructor(
     //userId -> carId
     private val carOwners = mutableSetOf<CarOwner>()
 
+
     fun getCarsByOwner(ownerId: Int): List<Car> {
         val carIds = carOwners.filter { it.userId == ownerId }.map { it.carId }
 
@@ -24,10 +26,25 @@ class CarOwnerRepository @Autowired constructor(
         return carRepository.findAll(carIds)
     }
 
-    //fun getCarOwners(carId: Int): List<User>
-
     //Lista de donos por carro
-    //Adicionar/remover carro ao usuário
-    //Adicionar/remover usuário ao carro
-    //Remover ambos
+    fun getCarOwners(CarId: Int): List<User> {
+        val list = carOwners.filter { it.carId ==  CarId }.map { it.userId }
+        if (carOwners.isEmpty()) {
+            throw NoSuchElementException("Nenhum dono encontrado com o carro informado")
+        }
+        return userRepository.findAll(list)
+    }
+
+    //Adicionar carro ao usuário
+    fun addOwner(user: User, car: Car){
+
+        carOwners.add(CarOwner(user.id, car.serialNumber));
+
+    }
+    //remover carro ao usuário
+    fun removeOwner(carOwner: CarOwner) {
+        carOwners.remove(carOwner)
+    }
+
+
 }
