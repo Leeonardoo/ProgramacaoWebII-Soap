@@ -14,6 +14,14 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload
 @Endpoint
 class UserEndpoint @Autowired constructor(private val userRepository: UserRepository) {
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUsersRequest")
+    @ResponsePayload
+    fun getAllUsers(@RequestPayload request: GetUsersRequest): UsersResponse {
+        return UsersResponse().apply {
+            users.addAll(userRepository.findAll())
+        }
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserRequest")
     @ResponsePayload
     fun getUser(@RequestPayload request: GetUserRequest): UserResponse {

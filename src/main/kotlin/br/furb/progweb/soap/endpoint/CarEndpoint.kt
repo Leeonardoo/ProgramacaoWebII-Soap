@@ -11,6 +11,14 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload
 @Endpoint
 class CarEndpoint @Autowired constructor(private val carRepository: CarRepository) {
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCarsRequest")
+    @ResponsePayload
+    fun getAllCars(@RequestPayload request: GetCarsRequest): CarsResponse {
+        return CarsResponse().apply {
+            cars.addAll(carRepository.findAll())
+        }
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCarRequest")
     @ResponsePayload
     fun getCar(@RequestPayload request: GetCarRequest): CarResponse {

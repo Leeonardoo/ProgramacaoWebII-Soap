@@ -71,13 +71,18 @@ class CarRepository {
         return cars[serialNumber]
     }
 
-    fun findAll(serialNumbers: List<Int>): List<Car> =
+    fun findAllBySerial(serialNumbers: List<Int>): List<Car> =
         cars.filter { serialNumbers.contains(it.key) }.values.toList()
+
+    fun findAll(): List<Car> =
+        cars.values.toList()
 
     fun delete(serialNumber: Int): Car? {
         if (cars[serialNumber] == null) {
             throw NoSuchElementException("Nenhum carro encontrado com o serialNumber informado")
         }
+
+        CarOwnerRepository.removeCar(serialNumber)
 
         return cars.remove(serialNumber)
     }

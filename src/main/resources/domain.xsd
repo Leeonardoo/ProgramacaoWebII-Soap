@@ -2,6 +2,11 @@
            targetNamespace="http://furb.br/progweb/soap" elementFormDefault="qualified">
 
     <!-- Cars -->
+    <xs:element name="getCarsRequest">
+        <xs:complexType>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="createCarRequest">
         <xs:complexType>
             <xs:sequence>
@@ -97,21 +102,13 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="cars" type="tns:car" minOccurs="0" maxOccurs="unbounded" />
-                <xs:element name="users" type="tns:user" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
     <!-- Users -->
-    <xs:element name="createOwnerRequest">
+    <xs:element name="getUsersRequest">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element name="user" type="tns:user"/>
-                <xs:element name="car" type="tns:car"/>
-                <xs:sequence>
-                    <xs:element name="cars" type="tns:car" minOccurs="0" maxOccurs="unbounded" />
-                </xs:sequence>
-            </xs:sequence>
         </xs:complexType>
     </xs:element>
 
@@ -151,6 +148,14 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="user" type="tns:user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="usersResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="users" type="tns:user" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>

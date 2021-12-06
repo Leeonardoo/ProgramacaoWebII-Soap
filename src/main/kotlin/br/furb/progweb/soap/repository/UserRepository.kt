@@ -67,6 +67,8 @@ class UserRepository {
             throw NoSuchElementException("Nenhum usuário encontrado com o id informado")
         }
 
+        CarOwnerRepository.removeUser(id)
+
         return users.remove(id)
     }
 
@@ -103,6 +105,9 @@ class UserRepository {
         }
     }
 
-    fun findAll(id: List<Int>): List<User> =
+    fun findAllById(id: List<Int>): List<User> =
         users.filter { id.contains(it.key) }.values.toList()
+
+    fun findAll(): List<User> =
+        users.values.toList()
 }
