@@ -13,8 +13,17 @@ class CarOwnerRepository @Autowired constructor(
 ) {
 
     //userId -> carId
-    private val carOwners = mutableSetOf<CarOwner>()
+    companion object {
+        private val carOwners = mutableSetOf<CarOwner>()
 
+        fun removeUser(userId: Int) {
+            carOwners.removeAll { it.userId == userId }
+        }
+
+        fun removeCar(carSerialNumber: Int) {
+            carOwners.removeAll { it.carSerialNumber == carSerialNumber }
+        }
+    }
 
     fun getCarsByOwner(ownerId: Int): List<Car> {
         val carIds = carOwners.filter { it.userId == ownerId }.map { it.carSerialNumber }
