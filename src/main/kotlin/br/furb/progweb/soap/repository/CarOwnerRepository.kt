@@ -17,16 +17,29 @@ class CarOwnerRepository @Autowired constructor(
         private val carOwners = mutableSetOf<CarOwner>()
 
         fun removeUser(userId: Int) {
-            carOwners.removeAll { it.userId == userId }
+            val user = carOwners.filter { it.userId == userId }
+            if (user.isEmpty()) {
+                throw NoSuchElementException("Usuário não encontrado")
+            } else
+                carOwners.removeAll { it.userId == userId }
         }
 
         fun removeCar(carSerialNumber: Int) {
-            carOwners.removeAll { it.carSerialNumber == carSerialNumber }
+            val car = carOwners.filter { it.carSerialNumber == carSerialNumber }
+            if (car.isEmpty()) {
+                throw NoSuchElementException("Nenhum carro encontrado")
+            } else
+                carOwners.removeAll { it.carSerialNumber == carSerialNumber }
         }
     }
 
     fun getCarsByOwner(ownerId: Int): List<Car> {
         val carIds = carOwners.filter { it.userId == ownerId }.map { it.carSerialNumber }
+        val user = carOwners.filter { it.userId == ownerId }
+
+        if (user.isEmpty()) {
+            throw NoSuchElementException("Usuário não encontrado")
+        }
 
         if (carIds.isEmpty()) {
             throw NoSuchElementException("Nenhum carro encontrado com o usuário informado")
@@ -38,6 +51,12 @@ class CarOwnerRepository @Autowired constructor(
     //Lista de donos por carro
     fun getCarOwners(carSerialNumber: Int): List<User> {
         val list = carOwners.filter { it.carSerialNumber ==  carSerialNumber }.map { it.userId }
+        val car = carOwners.filter { it.carSerialNumber == carSerialNumber }
+
+        if (car.isEmpty()) {
+            throw NoSuchElementException("Nenhum carro encontrado")
+        }
+
         if (carOwners.isEmpty()) {
             throw NoSuchElementException("Nenhum dono encontrado com o carro informado")
         }
@@ -46,12 +65,18 @@ class CarOwnerRepository @Autowired constructor(
 
     //Adicionar carro ao usuário
     fun addOwner(userId: Int, carSerialNumber: Int){
-        carOwners.add(CarOwner(userId, carSerialNumber));
+        if (userRepository.find(userId) != null && carRepository.find(carSerialNumber) != null) {
+            carOwners.add(CarOwner(userId, carSerialNumber));
+        } else
+            throw Exception("Erro ao adicionar veículo")
     }
 
     //Remover carro do usuário/usuário do carro
     fun removeCarOwner(userId: Int, carSerialNumber: Int) {
-        carOwners.remove(CarOwner(userId, carSerialNumber))
+        if (userRepository.find(userId) != null && carRepository.find(carSerialNumber) != null)
+            carOwners.remove(CarOwner(userId, carSerialNumber))
+        else
+            throw Exception("Erro ao adicionar veículo")
     }
 
 }
