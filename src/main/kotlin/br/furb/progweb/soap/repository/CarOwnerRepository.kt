@@ -17,7 +17,7 @@ class CarOwnerRepository @Autowired constructor(
 
 
     fun getCarsByOwner(ownerId: Int): List<Car> {
-        val carIds = carOwners.filter { it.userId == ownerId }.map { it.carId }
+        val carIds = carOwners.filter { it.userId == ownerId }.map { it.carSerialNumber }
 
         if (carIds.isEmpty()) {
             throw NoSuchElementException("Nenhum carro encontrado com o usuário informado")
@@ -27,8 +27,8 @@ class CarOwnerRepository @Autowired constructor(
     }
 
     //Lista de donos por carro
-    fun getCarOwners(CarId: Int): List<User> {
-        val list = carOwners.filter { it.carId ==  CarId }.map { it.userId }
+    fun getCarOwners(carSerialNumber: Int): List<User> {
+        val list = carOwners.filter { it.carSerialNumber ==  carSerialNumber }.map { it.userId }
         if (carOwners.isEmpty()) {
             throw NoSuchElementException("Nenhum dono encontrado com o carro informado")
         }
@@ -36,15 +36,13 @@ class CarOwnerRepository @Autowired constructor(
     }
 
     //Adicionar carro ao usuário
-    fun addOwner(user: User, car: Car){
-
-        carOwners.add(CarOwner(user.id, car.serialNumber));
-
-    }
-    //remover carro ao usuário
-    fun removeOwner(carOwner: CarOwner) {
-        carOwners.remove(carOwner)
+    fun addOwner(userId: Int, carSerialNumber: Int){
+        carOwners.add(CarOwner(userId, carSerialNumber));
     }
 
+    //Remover carro do usuário/usuário do carro
+    fun removeCarOwner(userId: Int, carSerialNumber: Int) {
+        carOwners.remove(CarOwner(userId, carSerialNumber))
+    }
 
 }
