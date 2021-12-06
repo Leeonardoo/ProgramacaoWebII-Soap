@@ -14,22 +14,31 @@ class UserRepository {
     fun initData() {
         val user = User().apply {
             id = 1
-            name = "Teste"
-            email = "teste@furb.br"
-            age = 19
+            name = "Daniel"
+            email = "daniel@furb.br"
+            age = 20
             cpf = "000.000.000-00"
             numCnh = "1212314134"
         }
         val user2 = User().apply {
             id = 2
-            name = "Teste2"
-            email = "teste2@furb.br"
+            name = "Leonardo"
+            email = "leonardo@furb.br"
+            age = 19
+            cpf = "000.000.000-00"
+            numCnh = "1212314134"
+        }
+        val user3 = User().apply {
+            id = 3
+            name = "Larson"
+            email = "larson@furb.br"
             age = 19
             cpf = "000.000.000-00"
             numCnh = "1212314134"
         }
         users[user.id] = user
         users[user2.id] = user2
+        users[user3.id] = user3
     }
 
     fun create(request: CreateUserRequest): User? {
@@ -72,22 +81,6 @@ class UserRepository {
         return users[request.user.id]
     }
 
-    fun addCar(request: CreateOwnerRequest): User? {
-        val user = find(request.user.id)
-
-        if (request.cars.size > 1) {
-            for (i in 0..request.cars.size) {
-                validateOwner(user, request.cars[i])
-                user?.cars?.add(request.cars[i])
-            }
-        } else {
-            validateOwner(user, request.car)
-            user?.cars?.add(request.car);
-        }
-
-        return users[user?.id]
-    }
-
     private fun validate(user: User?) {
         user ?: throw IllegalArgumentException("O campo user não pode estar vazio")
 
@@ -108,13 +101,6 @@ class UserRepository {
                 throw IllegalArgumentException("Campo CPF não pode ser vazio")
             }
         }
-    }
-
-    private fun validateOwner(user: User?, car: Car?) {
-        if (users[user?.id] != null)
-            throw Exception("Já existe um usuário com o id informado")
-
-        validate(user)
     }
 
     fun findAll(id: List<Int>): List<User> =

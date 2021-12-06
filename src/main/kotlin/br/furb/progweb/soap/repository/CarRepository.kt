@@ -16,8 +16,8 @@ class CarRepository {
     fun initData() {
         val car = Car().apply {
             serialNumber = 1
-            make = "Teste"
-            model = "Teste"
+            make = "Honda"
+            model = "Civic"
             type = "SUV"
             power = 999999
             seats = 10
@@ -27,8 +27,19 @@ class CarRepository {
         }
         val car2 = Car().apply {
             serialNumber = 2
-            make = "Teste"
-            model = "Teste"
+            make = "Toyota"
+            model = "Supra"
+            type = "SUV"
+            power = 999999
+            seats = 10
+            weight = 9992.2f
+            year = 2029
+            plate = "ASD1234"
+        }
+        val car3 = Car().apply {
+            serialNumber = 3
+            make = "Land Rover"
+            model = "Evoque"
             type = "SUV"
             power = 999999
             seats = 10
@@ -38,6 +49,7 @@ class CarRepository {
         }
         cars[car.serialNumber] = car
         cars[car2.serialNumber] = car2
+        cars[car3.serialNumber] = car3
     }
 
     fun create(request: CreateCarRequest): Car? {
